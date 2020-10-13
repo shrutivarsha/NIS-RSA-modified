@@ -156,17 +156,11 @@ for($i=1;$i<($count+1);$i++)
 {
     $C1=bcpowmod(strval($unpak[$i]),strval($e),strval($n));
     $C=intval(bcpowmod($C1,strval($g),strval($z)));
-    $cipher.=str_pad(decbin($C),$cz,"0");
+    $cipher.=str_pad(decbin($C),$cz,"0", STR_PAD_LEFT);
     echo"<br>";
     echo $C."=C<br>";
 }
-
-for($i=0;$i<($count+1);$i++)
-{
-	$length = $cz;
-	$biar[$i]=str_pad($Carray[$i],$length,"0", STR_PAD_LEFT);
-	//$biar[$i]=sprintf( "%07d", decbin($unpak[$i]));
-}
+echo $cpiher;
 $jbar=join($biar);
 echo $jbar;
 //variable M is message in integer form
