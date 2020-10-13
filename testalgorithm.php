@@ -160,7 +160,7 @@ for($i=1;$i<($count+1);$i++)
     echo"<br>";
     echo $C."=C<br>";
 }
-echo $cpiher;
+echo $cipher;
 //variable M is message in integer form
 //$M=113;
 echo $M." is the messages to be sent.<br> ";
@@ -184,6 +184,7 @@ echo" public key2: (".$d.",".$n.")<br>";
 //SHA
 //hash ( 'sha512' , $C [, bool $raw_output = FALSE ] ) : string
 $hashed = hash('sha512', $C);
+/*
 $privkey1=openssl_pkey_get_private("file://C:\Users\HP\Downloads\openssl-toolkit\server.pem");
 openssl_sign($C,$signature,$privkey1);
 //decryption
@@ -201,19 +202,38 @@ else
 {
     echo"ugly, eroor checking signature<br>";
 }
-for($i=0;$i<$count;$i++)
-{
+*/
 
+$cipher_db=$cipher;
+$cipher_arr= str_split($cipher_db,14);
+
+
+
+
+$dec_m="";
+foreach($cipher_arr as $i) {
+    $C=bindec($i);
+    echo $C;
+    echo"<br>";
+    $C1= bcpowmod(strval($C),strval($t),strval($z));
+
+    $Cp= $C1 % $p;
+    $Cq= $C1 % $q;
+    $Cr= $C1 % $r;
+    $Cs= $C1 % $s;
+    $mp= bcpowmod(strval($Cp),strval($d*$p),strval($p));
+    $mq= bcpowmod(strval($Cq),strval($d*$q),strval($q));
+    $mr= bcpowmod(strval($Cr),strval($d*$r),strval($r));
+    $ms= bcpowmod(strval($Cs),strval($d*$s),strval($s));
+    // echo $mp;
+    // echo"<br>";
+    $char= chr($mp+$mq+$mr+$ms);
+    // echo $char;
+    $dec_m.=$char;
 }
-$C1= bcpowmod(strval($C),strval($t),strval($z));
-$Cp= $C1 % $p;
-$Cq= $C1 % $q;
-$Cr= $C1 % $r;
-$Cs= $C1 % $s;
-$mp= bcpowmod(strval($Cp),($d*$p),$p);
-$mq= bcpowmod($Cq,($d*$q),$q);
-$mr= bcpowmod($Cr,($d*$r),$r);
-$ms= bcpowmod($Cs,($d*$s),$s);
+// echo $dec_m;
+
+
 //$message=pow($C,$d)%$n;
 //echo $message." mm ";
 $hashed2=hash('sha512',$C);
@@ -224,4 +244,5 @@ if($hashed==$hashed2)
 }
 echo $mp." is the message received.";
 //echo($mp.$mq.$mr.$ms);
+echo $dec_m;
 ?>
