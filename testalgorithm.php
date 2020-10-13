@@ -148,7 +148,6 @@ for($i=1;$i<($count+1);$i++)
     $unpak[$i]=decbin($unpak[$i]);
     //echo"<br>";
 }
-$estr=strval($e);
 $binz=strval(decbin($z));
 $cz=strlen($binz);
 for($i=1;$i<($count+1);$i++)
