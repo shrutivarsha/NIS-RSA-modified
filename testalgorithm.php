@@ -161,8 +161,6 @@ for($i=1;$i<($count+1);$i++)
     echo $C."=C<br>";
 }
 echo $cpiher;
-$jbar=join($biar);
-echo $jbar;
 //variable M is message in integer form
 //$M=113;
 echo $M." is the messages to be sent.<br> ";
