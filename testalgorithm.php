@@ -148,13 +148,12 @@ for($i=1;$i<($count+1);$i++)
     $unpak[$i]=decbin($unpak[$i]);
     //echo"<br>";
 }
-$jbar=join($biar);
-echo $jbar;
 $estr=strval($e);
 for($i=1;$i<($count+1);$i++)
 {
     $C1=bcpowmod(strval($unpak[$i]),strval($e),strval($n));
     $C=intval(bcpowmod($C1,strval($g),strval($z)));
+    $Carray[$i]=$C;
     echo"<br>";
     echo $C."=C<br>";
 }
@@ -163,9 +162,11 @@ $cz=strlen($binz);
 for($i=0;$i<($count+1);$i++)
 {
 	$length = $cz;
-	$biar[$i]=str_pad($unpak[$i],$length,"0", STR_PAD_LEFT);
+	$biar[$i]=str_pad($Carray[$i],$length,"0", STR_PAD_LEFT);
 	//$biar[$i]=sprintf( "%07d", decbin($unpak[$i]));
 }
+$jbar=join($biar);
+echo $jbar;
 //variable M is message in integer form
 //$M=113;
 echo $M." is the messages to be sent.<br> ";
@@ -210,12 +211,12 @@ for($i=0;$i<$count;$i++)
 {
 
 }
-$C1= bcpowmod($C,$t,$z);
+$C1= bcpowmod(strval($C),strval($t),strval($z));
 $Cp= $C1 % $p;
 $Cq= $C1 % $q;
 $Cr= $C1 % $r;
 $Cs= $C1 % $s;
-$mp= bcpowmod($Cp,($d*$p),$p);
+$mp= bcpowmod(strval($Cp),($d*$p),$p);
 $mq= bcpowmod($Cq,($d*$q),$q);
 $mr= bcpowmod($Cr,($d*$r),$r);
 $ms= bcpowmod($Cs,($d*$s),$s);
