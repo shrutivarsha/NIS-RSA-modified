@@ -180,7 +180,7 @@ $prikeyar1=array($t,$z);
 $prikeyar2=array($d,$n);
 $pubkeyar1=array($e,$n);
 $pubkeyar2=array($g,$z);
-$privkey=join($prikeyar1);
+//$privkey=join($prikeyar1);
 $pubkey=join($pubkeyar1);
 echo" public key1: (".$e.",".$n.")<br>";
 echo" public key2: (".$g.",".$z.")<br>";
@@ -220,28 +220,29 @@ for($i=0;$i<count($cipher_arr);$i++){
     $C=bindec($cipher_arr[$i]);
     echo"<br>";
     echo $C;
-   
-    $M1=bcpowmod($C,strval($g),strval($z));
-    $M=intval(bcpowmod($M1,strval($e),strval($n)));
+    //$M1=bcpowmod($C,strval($t),strval($z));
+    //$M=intval(bcpowmod($M1,strval($d),strval($n)));
 
     
-    // $Cp= $C1 % $p;
-    // $Cq= $C1 % $q;
-    // $Cr= $C1 % $r;
-    // $Cs= $C1 % $s;
-    // $dp= $d % ($p-1);
-    // $dq= $d % ($q-1);
-    // $dr= $d % ($r-1);
-    // $ds= $d % ($s-1);
-    // $mp= bcpowmod(strval($Cp),strval($dp),strval($p));
+    $Cp= $C1 % $p;
+    $Cq= $C1 % $q;
+    $Cr= $C1 % $r;
+    $Cs= $C1 % $s;
+    $dp= $d % ($p-1);
+    $dq= $d % ($q-1);
+    $dr= $d % ($r-1);
+    $ds= $d % ($s-1);
+    $mp= bcpowmod(strval($Cp),strval($dp),strval($p));
+    //echo $mp;
+    $mq= bcpowmod(strval($Cq),strval($dq),strval($q));
+    $mr= bcpowmod(strval($Cr),strval($dr),strval($r));
+    $ms= bcpowmod(strval($Cs),strval($ds),strval($s));
     // echo $mp;
-    // $mq= bcpowmod(strval($Cq),strval($dq),strval($q));
-    // $mr= bcpowmod(strval($Cr),strval($dr),strval($r));
-    // $ms= bcpowmod(strval($Cs),strval($ds),strval($s));
-    // echo $mp;
-    
+    $M=$mp % $p;
+    $M=$mq % $q;
+    $M=$mr % $r;
+    $M=$ms % $s;
     $char= chr($M);
-   
     $dec_m.=$char;
     // echo $dp;
     // echo"<br>";
