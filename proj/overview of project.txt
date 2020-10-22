@@ -1,0 +1,73 @@
+Overview of project:
+
+We have made a secure data exchange app where files are encrypted using 
+RSA-CRT algorithm.
+
+For the first time, if a user signup for the portal, a dynamic table is created
+in the database for the user which stores his/her password for the portal.
+A separate table each for storing private key and public key of every user.
+All the password/keys of user is stored by applying cryptographic hash function
+MD5 in db as storing plain text passwords in the database is no less than a sin.
+
+When the user login successfully to the portal, he is redirected to his chat box.(
+To do so, the contact's stored in the database is extracted dynamically).
+All the previous exchanged files appears in the chat box.
+
+Now when the user sends a file? What happens?
+When a file is sent, the file is uploaded in the database which serves as 
+a Cloud to the user. Now, the file stored in the database(which will
+be used further for retrieval purpose by user) is actually large binary 
+values(as a result of RSA-CRT encryption). For implementing RSA-CRT, public
+key and private key is retrieved from database. SHA-1 is used for ensuring 
+integrity of the data. So the third party has no access to the data sent 
+and received between two users. 
+
+It acts as Cloud since the user need not download the exchanged file, just
+by clicking on the file he can view the current and previously exchanged file.
+
+
+Overview of Algorithm in project:
+
+The algorithm implementation is described under "RSA USING MULTI-KEYS AND 
+CHINESE REMAINDER THEOREM" in the document. 
+For encryption:
+e, g, n and z(public keys are used) where
+n = pq
+z = rs.
+( four large prime numbers -p, q, r and s)
+
+The values are fetched from database.
+
+It's a double encryption where firstly  ciphertext C1 is generated:
+C1 = M^e mod (n)
+which is further encrypted 
+C = C1^g mod (z)
+
+C is ciphertext stored in db.
+
+For decryption:
+Private key t, z, dp, dq,dr, ds is used.
+We find C1 using 
+C1 = C^t mod (z)
+and then C is calculated using dp,dq,dr,ds as already stated in the algorithm
+part. 
+The private key is retrieved from the db while users try to retrieve the 
+files/data.
+
+To ensure integrity, SHA 1 hashing is used. If the message's hash calculated
+at the reciever's end is not same as that of sender then the message is 
+modified.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
